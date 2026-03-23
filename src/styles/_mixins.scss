@@ -1,0 +1,27 @@
+@import './variables';
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin card {
+  background: $surface-color;
+  border-radius: $radius-md;
+  border: 1px solid $slate-100;
+  box-shadow: $shadow-sm;
+  padding: 1.5rem;
+  transition: $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+@mixin glass {
+  background: $glass-bg;
+  backdrop-filter: blur(12px);
+  border: 1px solid $glass-border;
+  box-shadow: $shadow-glass;
+}
