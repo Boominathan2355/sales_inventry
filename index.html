@@ -5,6 +5,33 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>sales_inv</title>
+    <script>
+      // Gracefully handle "Access to storage is not allowed" errors
+      (function() {
+        try {
+          const test = '__storage_test__';
+          window.localStorage.setItem(test, test);
+          window.localStorage.removeItem(test);
+        } catch (e) {
+          console.warn('Storage access is restricted. Providing in-memory fallback.');
+          const memoryStorage = {};
+          const mockStorage = {
+            getItem: (key) => memoryStorage[key] || null,
+            setItem: (key, value) => { memoryStorage[key] = String(value); },
+            removeItem: (key) => { delete memoryStorage[key]; },
+            clear: () => { for (const key in memoryStorage) delete memoryStorage[key]; },
+            key: (index) => Object.keys(memoryStorage)[index] || null,
+            get length() { return Object.keys(memoryStorage).length; }
+          };
+          try {
+            Object.defineProperty(window, 'localStorage', { value: mockStorage, configurable: true });
+            Object.defineProperty(window, 'sessionStorage', { value: mockStorage, configurable: true });
+          } catch (err) {
+            // If defineProperty fails, we at least tried to mitigate it
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
