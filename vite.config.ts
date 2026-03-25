@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/sales_inventry/', // GitHub repo name
+  base: './', // Use relative base path for portability
 })
